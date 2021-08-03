@@ -13,9 +13,12 @@ public class Porgrama {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ciy01-jpa");
 		EntityManager em = emf.createEntityManager();
 
+		// para remover um dado do banco primeiro temos que buscar ele no banco para deixar ele MONITORADO depois podemos remover
+		// o objeto destacado no JPA nao pode ser removido
 		Pessoa p = em.find(Pessoa.class, 2);
-		
-		System.out.println(p);
+		em.getTransaction().begin();
+		em.remove(p);
+		em.getTransaction().commit();
 		
 		System.out.println("Pronto!");
 		em.close();
